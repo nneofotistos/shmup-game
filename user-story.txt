@@ -1,0 +1,31 @@
+As a user see a screen load. 
+On my screen I want to see:
+ One ship, Group of enemies, Score, Lives, Bombs, Power meter, power and bomb pick ups
+
+Ship can move in 8 directions, shoot, and use bombs
+
+As a user I want to be able to shoot an enemy
+ I want an enemy to dissapear when shot and score count to increase by 1000
+ Enemies should randomly drop power pick ups when killed
+
+As a user I want to be able to use a bomb
+ Bombs destroy all enemies and enemy bullets on screen
+ Bomb pickups are rare
+
+Power pick ups add 5 points to the power meter
+Lose all power after losing a life
+Power ups at certain amount of power meter 
+    i.e, at 25 power you shoot more bullets/increase bullet speed, at 100 you shoot even more/even faster bullets
+
+Ship should be destroyed on contact with enemies and enemy bullets
+ Lose 1 life and 50000 points when destroyed
+
+
+not happening:
+Enemy group patterns?
+Bullet patterns?
+Bosses?
+
+Bullet hell or galaga? idk
+
+help :)
