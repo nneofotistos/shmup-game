@@ -23,10 +23,30 @@ class Player {
 const player = new Player(225, 550, 25, 25, 'blue');
 player.render();
 
-document.addEventListener('keydown', movementHandler);
+document.addEventListener('keydown', movement);
+document.addEventListener('keyup', movement);
+
+// two event listeners for keydown and keyup
+// keydown sets state to key held down = true
+// keyup sets key held down = false
+// key held moves player in given direction
+
+
+
+function movement(e) {
+    console.log(e);
+}
+
+/* const move = {
+    up: false,
+    down: false,
+    left: false,
+    right: false
+}
 
 function movementHandler(e) {
-    console.log('movement', e.key);
+    console.log(e);
+
     switch(e.key) {
         case 'w':
             // move donkey up
@@ -46,7 +66,7 @@ function movementHandler(e) {
             break;
     }
 }
-
+ */
 window.addEventListener('load', function(e) {
     const runGame = setInterval(gameLoop, 120);
 })
