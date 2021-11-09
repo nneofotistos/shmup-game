@@ -23,55 +23,57 @@ class Player {
 const player = new Player(225, 550, 25, 25, 'blue');
 player.render();
 
-document.addEventListener('keydown', movement);
-document.addEventListener('keyup', movement);
 
 // two event listeners for keydown and keyup
 // keydown sets state to key held down = true
 // keyup sets key held down = false
-// key held moves player in given direction
+// key held down moves player in given direction
 
+let keysDown = []; // track all keys being held
 
+document.addEventListener('keydown', function(e){
+    
+    keysDown.push(e.key); // push key to array when keydown
+});
 
-function movement(e) {
-    console.log(e);
-}
+document.addEventListener('keyup', function(e){
 
-/* const move = {
-    up: false,
-    down: false,
-    left: false,
-    right: false
-}
+    for(x in keysDown){
+        if (keysDown[x] == e.key){
+            keysDown[x]=''; // remove key from array when keyup
+        }
+    }
+});
 
-function movementHandler(e) {
-    console.log(e);
-
-    switch(e.key) {
-        case 'w':
-            // move donkey up
-            player.y - 10 >= 0 ? player.y -= 10 : null;
-            break;
-        case 'a':
-            // left
-            player.x - 10 >= 0 ? player.x -= 10 : null;
-            break;
-        case 'd':
-            // right
-            player.x + 10 <= game.width ? player.x += 10 : null;
-            break;
-        case 's':
-            // down
-            player.y + 10 <= game.height ? player.y += 10 : null;
-            break;
+function keyDown(key){ // track which key is being held
+    if(keysDown.includes(key)){
+        return true
+    } else {
+        return false
     }
 }
- */
+
+let speed = 8;
+
 window.addEventListener('load', function(e) {
-    const runGame = setInterval(gameLoop, 120);
+    const runGame = setInterval(gameLoop, 60);
 })
 
 function gameLoop () {
     ctx.clearRect(0, 0, game.width, game.height);
     player.render();
+    if(keyDown('w')||keyDown('ArrowUp')||keyDown('W')){
+        player.y-speed>=0?player.y-=speed:null;
+    }
+    if(keyDown('s')||keyDown('ArrowDown')||keyDown('S')){
+        player.y+speed<=game.height-25?player.y+=10:null;
+    }
+    if(keyDown('a')||keyDown('ArrowLeft')||keyDown('A')){
+        player.x-speed>=0?player.x-=speed:null;
+    }
+    if(keyDown('d')||keyDown('ArrowRight')||keyDown('D')){
+        player.x+speed<=game.width-25?player.x+=10:null;
+    }
+    if(keyDown('z'))
+
 }
