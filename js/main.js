@@ -20,9 +20,42 @@ class Player {
     }
 }
 
+class Enemy {
+    constructor(x, y, height, width, color) {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+
+        this.render = function () {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.height, this.width)
+        }
+    }
+}
+
+class Bullet {
+    constructor(x, y, height, width, color, speed) {
+        this.x = x;
+        this.y = y;
+        this.height = height;
+        this.width = width;
+        this.color = color;
+        this.speed = speed;
+
+        this.render = function () {
+            ctx.fillStyle = this.color
+            ctx.fillRect(this.x, this.y, this.height, this.width)
+        }
+    }
+}
+
 const player = new Player(225, 550, 25, 25, 'blue');
 player.render();
 
+const enemy1 = new Enemy(225, 50, 25, 25, 'red');
+enemy1.render();
 
 // two event listeners for keydown and keyup
 // keydown sets state to key held down = true
@@ -59,9 +92,16 @@ window.addEventListener('load', function(e) {
     const runGame = setInterval(gameLoop, 60);
 })
 
+// on keydown, fire projectile
+// projectile moves forward
+// while keydown, wait 100 frames before firing next projectile
+
+var bullets = [];
+
 function gameLoop () {
     ctx.clearRect(0, 0, game.width, game.height);
     player.render();
+    enemy1.render();
     if(keyDown('w')||keyDown('ArrowUp')||keyDown('W')){
         player.y-speed>=0?player.y-=speed:null;
     }
@@ -74,6 +114,10 @@ function gameLoop () {
     if(keyDown('d')||keyDown('ArrowRight')||keyDown('D')){
         player.x+speed<=game.width-25?player.x+=10:null;
     }
-    if(keyDown('z'))
+    // shoot
+    if(keyDown('z')||keyDown('Z')){
+        var newBullet = new Bullet(player.x, player.y, 5, 5, 'yellow', 8);
+        
+    }
 
 }
