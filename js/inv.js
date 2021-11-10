@@ -8,4 +8,3 @@ let score = 0;
 
 ictx.font = "30px arial";
 ictx.fillStyle = 'white';
-ictx.fillText(score, 25, 50);

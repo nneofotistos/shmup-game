@@ -67,8 +67,9 @@ var enemies = [];
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
+    ictx.clearRect(0, 0, inv.width, inv.height);
     player.render();
-
+    ictx.fillText(score, 25, 50);
     // bullet movement
     for (let i = 0; i < bullets.length; i++) {
         if (bullets[i].alive) {
@@ -104,7 +105,7 @@ function gameLoop() {
                 enemies[j].alive = null;
                 enemies.splice(j,1);
                 bullets.splice(k,1);
-                
+                score+=5000;
             }
         }
     }
