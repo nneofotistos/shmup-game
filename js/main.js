@@ -69,18 +69,6 @@ window.addEventListener('load', function (e) {
 var bullets = [];
 var enemies = [];
 
-function addEnemy() 
-{ 
-	var e = new Rectangle(225, 50, 25, 25, 'red');
-	 
-	e.x = Math.floor(Math.random() * (320 - 50)) 
-	e.y = -50 
-	 
-	enemies.push(e);
-}
-
-
-
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     player.render();
@@ -92,13 +80,11 @@ function gameLoop() {
             bullets[i].y -= 20;
         }
 
-        if (bullets[i].y < - 20) {
-            bullets[i].alive = false;
+        if (bullets[i].y < - 10) {
+            bullets[i].alive = null;
+            
         }
-
-        
     }
-
 
     // enemy movement
     for (let j = 0; j < enemies.length; j++) {
@@ -110,20 +96,22 @@ function gameLoop() {
         }
 
         if (enemies[j].y > 700) {
-            enemies[j].alive = false;
+            enemies[j].alive = null;
+            
 
         }
         // bullet and enemy collision
         for (let k = 0; k < bullets.length; k++) {
-            if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y < enemies[j].y + enemies[j].width) {
-                bullets[k].alive = false;
-                enemies[j].alive = false;
+            if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y < enemies[j].y + enemies[j].width && bullets[k].alive && enemies[j].alive) {
+                bullets[k].alive = null;
+                enemies[j].alive = null;
+                enemies = enemies.splice(j,1);
+                bullets = bullets.splice(k,1);
                 
             }
         }
-
-        
     }
+    
 
 
 
@@ -147,4 +135,17 @@ function gameLoop() {
         bullets.push(b);
     }
 }
+
+function addEnemy() 
+{ 
+	var e = new Rectangle(225, 50, 25, 25, 'red');
+	 
+	e.x = Math.floor(Math.random() * (450 - 50)) 
+	e.y = -50 
+	 
+	enemies.push(e);
+    console.log(enemies);
+}
+
+
 
