@@ -48,6 +48,7 @@ class Bullet {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.height, this.width)
         }
+
     }
 }
 
@@ -64,22 +65,22 @@ enemy1.render();
 
 let keysDown = []; // track all keys being held
 
-document.addEventListener('keydown', function(e){
-    
+document.addEventListener('keydown', function (e) {
+
     keysDown.push(e.key); // push key to array when keydown
 });
 
-document.addEventListener('keyup', function(e){
+document.addEventListener('keyup', function (e) {
 
-    for(x in keysDown){
-        if (keysDown[x] == e.key){
-            keysDown[x]=''; // remove key from array when keyup
+    for (x in keysDown) {
+        if (keysDown[x] == e.key) {
+            keysDown[x] = ''; // remove key from array when keyup
         }
     }
 });
 
-function keyDown(key){ // track which key is being held
-    if(keysDown.includes(key)){
+function keyDown(key) { // track which key is being held
+    if (keysDown.includes(key)) {
         return true
     } else {
         return false
@@ -88,36 +89,40 @@ function keyDown(key){ // track which key is being held
 
 let speed = 8;
 
-window.addEventListener('load', function(e) {
+window.addEventListener('load', function (e) {
     const runGame = setInterval(gameLoop, 60);
 })
 
 // on keydown, fire projectile
-// projectile moves forward
-// while keydown, wait 100 frames before firing next projectile
+// projectile moves forward every tick
 
 var bullets = [];
 
-function gameLoop () {
+function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     player.render();
     enemy1.render();
-    if(keyDown('w')||keyDown('ArrowUp')||keyDown('W')){
-        player.y-speed>=0?player.y-=speed:null;
-    }
-    if(keyDown('s')||keyDown('ArrowDown')||keyDown('S')){
-        player.y+speed<=game.height-25?player.y+=10:null;
-    }
-    if(keyDown('a')||keyDown('ArrowLeft')||keyDown('A')){
-        player.x-speed>=0?player.x-=speed:null;
-    }
-    if(keyDown('d')||keyDown('ArrowRight')||keyDown('D')){
-        player.x+speed<=game.width-25?player.x+=10:null;
-    }
-    // shoot
-    if(keyDown('z')||keyDown('Z')){
-        var newBullet = new Bullet(player.x, player.y, 5, 5, 'yellow', 8);
-        
+    for (let i = 0; i < bullets.length; i++) {
+        bullets[i].render();
+        bullets[i].y -= 20;
     }
 
+    if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
+        player.y - speed >= 0 ? player.y -= speed : null;
+    }
+    if (keyDown('s') || keyDown('ArrowDown') || keyDown('S')) {
+        player.y + speed <= game.height - 25 ? player.y += 10 : null;
+    }
+    if (keyDown('a') || keyDown('ArrowLeft') || keyDown('A')) {
+        player.x - speed >= 0 ? player.x -= speed : null;
+    }
+    if (keyDown('d') || keyDown('ArrowRight') || keyDown('D')) {
+        player.x + speed <= game.width - 25 ? player.x += 10 : null;
+    }
+    // shoot
+    if (keyDown('z') || keyDown('Z')) {
+        var b = new Bullet(player.x + 10, player.y, 5, 5, 'white', 5)
+        bullets.push(b);
+        console.log(bullets);
+    }
 }
