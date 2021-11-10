@@ -19,7 +19,6 @@ class Rectangle {
             ctx.fillStyle = this.color
             ctx.fillRect(this.x, this.y, this.height, this.width)
         }
-
     }
 }
 
@@ -141,7 +140,5 @@ function addEnemy()
 }
 
 
-
-// SIDEBAR CANVAS
 
 
