@@ -105,7 +105,10 @@ function gameLoop() {
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].render();
         bullets[i].y -= 20;
+        
     }
+
+    
 
     if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
         player.y - speed >= 0 ? player.y -= speed : null;
