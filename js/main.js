@@ -1,4 +1,4 @@
-// canvas
+// GAME CANVAS
 let game = document.getElementById('game');
 let ctx = game.getContext('2d');
 
@@ -26,9 +26,6 @@ class Rectangle {
 
 const player = new Rectangle(225, 550, 25, 25, 'blue');
 player.render();
-
-
-
 
 // two event listeners for keydown and keyup
 // keydown sets state to key held down = true
@@ -82,13 +79,13 @@ function gameLoop() {
 
         if (bullets[i].y < - 10) {
             bullets[i].alive = null;
+            bullets.splice(i,1);
             
         }
     }
 
     // enemy movement
     for (let j = 0; j < enemies.length; j++) {
-
 
         if (enemies[j].alive) {
             enemies[j].render();
@@ -97,6 +94,7 @@ function gameLoop() {
 
         if (enemies[j].y > 700) {
             enemies[j].alive = null;
+            enemies.splice(j,1);
             
 
         }
@@ -105,18 +103,13 @@ function gameLoop() {
             if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y < enemies[j].y + enemies[j].width && bullets[k].alive && enemies[j].alive) {
                 bullets[k].alive = null;
                 enemies[j].alive = null;
-                enemies = enemies.splice(j,1);
-                bullets = bullets.splice(k,1);
+                enemies.splice(j,1);
+                bullets.splice(k,1);
                 
             }
         }
     }
     
-
-
-
-
-
     if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
         player.y - speed >= 0 ? player.y -= speed : null;
     }
@@ -144,8 +137,11 @@ function addEnemy()
 	e.y = -50 
 	 
 	enemies.push(e);
-    console.log(enemies);
+    
 }
 
+
+
+// SIDEBAR CANVAS
 
 
