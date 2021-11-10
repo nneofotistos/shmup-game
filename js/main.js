@@ -5,37 +5,7 @@ let ctx = game.getContext('2d');
 game.setAttribute('height', getComputedStyle(game)["height"]);
 game.setAttribute('width', getComputedStyle(game)["width"]);
 
-class Player {
-    constructor(x, y, height, width, color) {
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-        this.color = color;
-
-        this.render = function () {
-            ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.height, this.width)
-        }
-    }
-}
-
-class Enemy {
-    constructor(x, y, height, width, color) {
-        this.x = x;
-        this.y = y;
-        this.height = height;
-        this.width = width;
-        this.color = color;
-
-        this.render = function () {
-            ctx.fillStyle = this.color
-            ctx.fillRect(this.x, this.y, this.height, this.width)
-        }
-    }
-}
-
-class Bullet {
+class Rectangle {
     constructor(x, y, height, width, color, speed) {
         this.x = x;
         this.y = y;
@@ -43,6 +13,7 @@ class Bullet {
         this.width = width;
         this.color = color;
         this.speed = speed;
+        this.alive = true;
 
         this.render = function () {
             ctx.fillStyle = this.color
@@ -53,11 +24,11 @@ class Bullet {
 }
 
 
-const player = new Player(225, 550, 25, 25, 'blue');
+const player = new Rectangle(225, 550, 25, 25, 'blue');
 player.render();
 
-const enemy1 = new Enemy(225, 50, 25, 25, 'red');
-enemy1.render();
+const enemy1 = new Rectangle(225, 50, 25, 25, 'red');
+
 
 // two event listeners for keydown and keyup
 // keydown sets state to key held down = true
@@ -98,21 +69,54 @@ window.addEventListener('load', function (e) {
 // projectile moves forward every tick
 
 var bullets = [];
+var enemies = [];
+
+enemies.push(enemy1);
+
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     player.render();
-    enemy1.render();
-    for (let i = 0; i < bullets.length; i++) {
-        bullets[i].render();
-        bullets[i].y -= 20;
 
-        if(bullets[i].y < - 20){
-            bullets = bullets.slice(i);
+    // bullet movement
+    for (let i = 0; i < bullets.length; i++) {
+        if (bullets[i].alive) {
+            bullets[i].render();
+            bullets[i].y -= 20;
+        }
+
+        if (bullets[i].y < - 20) {
+            bullets[i].alive = false;
         }
     }
 
-    
+
+    // enemy movement
+    for (let j = 0; j < enemies.length; j++) {
+
+
+        if (enemies[j].alive) {
+            enemies[j].render();
+            enemies[j].y += 0;
+        }
+        
+        if (enemies[j].y > 700) {
+            enemies[j].alive = false;
+
+        }
+        // bullet and enemy collision
+        for (let k = 0; k < bullets.length; k++) {
+            if (bullets[k].x >= enemies[j].x && bullets[k].x + 5 < enemies[j].x + 25 && bullets[k].y < enemies[j].y + 40) {
+                bullets[k].alive = false;
+                enemies[j].alive = false;
+                
+            }
+        }
+    }
+
+
+
+
 
     if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
         player.y - speed >= 0 ? player.y -= speed : null;
@@ -128,8 +132,8 @@ function gameLoop() {
     }
     // shoot
     if (keyDown('z') || keyDown('Z')) {
-        var b = new Bullet(player.x + 10, player.y, 5, 5, 'white', 5)
+        var b = new Rectangle(player.x + 10, player.y, 5, 5, 'white', 5)
         bullets.push(b);
-        console.log(bullets);
     }
 }
+
