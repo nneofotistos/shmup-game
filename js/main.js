@@ -52,6 +52,7 @@ class Bullet {
     }
 }
 
+
 const player = new Player(225, 550, 25, 25, 'blue');
 player.render();
 
@@ -105,7 +106,10 @@ function gameLoop() {
     for (let i = 0; i < bullets.length; i++) {
         bullets[i].render();
         bullets[i].y -= 20;
-        
+
+        if(bullets[i].y < - 20){
+            bullets = bullets.slice(i);
+        }
     }
 
     
