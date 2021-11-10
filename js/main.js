@@ -27,7 +27,7 @@ class Rectangle {
 const player = new Rectangle(225, 550, 25, 25, 'blue');
 player.render();
 
-const enemy1 = new Rectangle(225, 50, 25, 25, 'red');
+
 
 
 // two event listeners for keydown and keyup
@@ -63,15 +63,22 @@ let speed = 8;
 
 window.addEventListener('load', function (e) {
     const runGame = setInterval(gameLoop, 60);
+    timerSource = setInterval('addEnemy()', 1000);
 })
-
-// on keydown, fire projectile
-// projectile moves forward every tick
 
 var bullets = [];
 var enemies = [];
 
-enemies.push(enemy1);
+function addEnemy() 
+{ 
+	var e = new Rectangle(225, 50, 25, 25, 'red');
+	 
+	e.x = Math.floor(Math.random() * (320 - 50)) 
+	e.y = -50 
+	 
+	enemies.push(e);
+}
+
 
 
 function gameLoop() {
@@ -88,6 +95,8 @@ function gameLoop() {
         if (bullets[i].y < - 20) {
             bullets[i].alive = false;
         }
+
+        
     }
 
 
@@ -97,21 +106,23 @@ function gameLoop() {
 
         if (enemies[j].alive) {
             enemies[j].render();
-            enemies[j].y += 0;
+            enemies[j].y += 8;
         }
-        
+
         if (enemies[j].y > 700) {
             enemies[j].alive = false;
 
         }
         // bullet and enemy collision
         for (let k = 0; k < bullets.length; k++) {
-            if (bullets[k].x >= enemies[j].x && bullets[k].x + 5 < enemies[j].x + 25 && bullets[k].y < enemies[j].y + 40) {
+            if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y < enemies[j].y + enemies[j].width) {
                 bullets[k].alive = false;
                 enemies[j].alive = false;
                 
             }
         }
+
+        
     }
 
 
