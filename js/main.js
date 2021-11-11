@@ -22,7 +22,6 @@ class Rectangle {
     }
 }
 
-
 const player = new Rectangle(225, 550, 25, 25, 'blue');
 player.render();
 
@@ -59,6 +58,7 @@ let speed = 8;
 
 window.addEventListener('load', function (e) {
     const runGame = setInterval(gameLoop, 60);
+    const runInv = setInterval(invLoop, 60);
     timerSource = setInterval('addEnemy()', 1000);
 })
 
@@ -67,9 +67,8 @@ var enemies = [];
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
-    ictx.clearRect(0, 0, inv.width, inv.height);
     player.render();
-    ictx.fillText(score, 25, 50);
+    
     // bullet movement
     for (let i = 0; i < bullets.length; i++) {
         if (bullets[i].alive) {
