@@ -64,6 +64,7 @@ window.addEventListener('load', function (e) {
 
 var bullets = [];
 var enemies = [];
+var eBullets = [];
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
@@ -125,6 +126,12 @@ function gameLoop() {
     if (keyDown('z') || keyDown('Z')) {
         var b = new Rectangle(player.x + 10, player.y, 5, 5, 'white', 5)
         bullets.push(b);
+    }
+
+    if (keyDown('x')) {
+        if(bombs>0){
+            useBomb();
+        }
     }
 }
 
