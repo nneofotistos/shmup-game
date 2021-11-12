@@ -23,6 +23,10 @@ function invLoop() {
     ictx.fillText(score, 25, 50);
     ictx.fillText("Bombs:", 25, 90);
     for(let i=0;i<bombs;i++){
-        ictx.fillRect(50*i+25, 120, 25, 25);
+        ictx.fillRect(25*i+25, 120, 10, 10);
+    }
+    ictx.fillText("Lives:", 25, 190);
+    for(let i=0;i<hits;i++){
+        ictx.fillRect(25*i+25, 220, 10, 10);
     }
 }

@@ -89,7 +89,8 @@ function gameLoop() {
 
         if (enemies[j].alive) {
             enemies[j].render();
-            enemies[j].y += 8;
+            enemies[j].y += 4;
+
         }
 
         if (enemies[j].y > 700) {
@@ -146,6 +147,12 @@ function addEnemy()
     
 }
 
+function enemyFire(x, y)
+{
+    var eb = new Rectangle(x, y, 28, 28, 'white');
+
+    eBullets.push(eb);
+}
 
 
 
