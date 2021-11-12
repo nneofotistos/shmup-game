@@ -122,6 +122,16 @@ function gameLoop() {
             eBullets[i].alive = null;
             eBullets.splice(i, 1);
         }
+
+        // if bullet.x is within player
+        // if bullet.y is within player
+
+
+        // check bullet and player collision
+        if(eBullets[i].x >= player.x && eBullets[i].x + eBullets[i].width < player.x + player.width && eBullets[i].y > player.y && eBullets[i].y < player.y + player.width){
+            eBullets[i].alive = null;
+            eBullets.splice(i, 1);
+        }
     }
 
     if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {

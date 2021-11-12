@@ -14,6 +14,7 @@ bombs = bomb_count;
 function useBomb(){
     bombs--;
     enemies = [];
+    eBullets = [];
 }
 
 function invLoop() {
