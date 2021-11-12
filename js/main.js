@@ -14,6 +14,7 @@ class Rectangle {
         this.color = color;
         this.speed = speed;
         this.alive = true;
+        this.canShoot = true;
 
         this.render = function () {
             ctx.fillStyle = this.color
@@ -24,11 +25,6 @@ class Rectangle {
 
 const player = new Rectangle(225, 550, 25, 25, 'blue');
 player.render();
-
-// two event listeners for keydown and keyup
-// keydown sets state to key held down = true
-// keyup sets key held down = false
-// key held down moves player in given direction
 
 let keysDown = []; // track all keys being held
 
@@ -59,7 +55,7 @@ let speed = 8;
 window.addEventListener('load', function (e) {
     const runGame = setInterval(gameLoop, 60);
     const runInv = setInterval(invLoop, 60);
-    timerSource = setInterval('addEnemy()', 1000);
+    timerSource = setInterval(addEnemy, 1500);
 })
 
 var bullets = [];
@@ -69,18 +65,18 @@ var eBullets = [];
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
     player.render();
-    
+
     // bullet movement
     for (let i = 0; i < bullets.length; i++) {
         if (bullets[i].alive) {
             bullets[i].render();
             bullets[i].y -= 20;
+
         }
 
         if (bullets[i].y < - 10) {
             bullets[i].alive = null;
-            bullets.splice(i,1);
-            
+            bullets.splice(i, 1);
         }
     }
 
@@ -90,13 +86,17 @@ function gameLoop() {
         if (enemies[j].alive) {
             enemies[j].render();
             enemies[j].y += 4;
-
+            if (enemies[j].canShoot == true) {
+                enemyFire(enemies[j].x + 10, enemies[j].y + 15)
+                enemies[j].canShoot = false;
+                reload(enemies[j]);
+            }
         }
 
         if (enemies[j].y > 700) {
             enemies[j].alive = null;
-            enemies.splice(j,1);
-            
+            enemies.splice(j, 1);
+
 
         }
         // bullet and enemy collision
@@ -104,13 +104,26 @@ function gameLoop() {
             if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y < enemies[j].y + enemies[j].width && bullets[k].alive && enemies[j].alive) {
                 bullets[k].alive = null;
                 enemies[j].alive = null;
-                enemies.splice(j,1);
-                bullets.splice(k,1);
-                score+=5000;
+                enemies.splice(j, 1);
+                bullets.splice(k, 1);
+                score += 5000;
             }
         }
     }
-    
+
+    // enemy bullet movement
+    for (let i = 0; i < eBullets.length; i++) {
+        if (eBullets[i].alive) {
+            eBullets[i].render();
+            eBullets[i].y += 12;
+        }
+
+        if (eBullets[i].y > 700) {
+            eBullets[i].alive = null;
+            eBullets.splice(i, 1);
+        }
+    }
+
     if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
         player.y - speed >= 0 ? player.y -= speed : null;
     }
@@ -130,28 +143,36 @@ function gameLoop() {
     }
 
     if (keyDown('x')) {
-        if(bombs>0){
+        if (bombs > 0) {
             useBomb();
         }
     }
 }
 
-function addEnemy() 
-{ 
-	var e = new Rectangle(225, 50, 25, 25, 'red');
-	 
-	e.x = Math.floor(Math.random() * (450 - 50)) 
-	e.y = -50 
-	 
-	enemies.push(e);
-    
+function addEnemy() {
+    var e = new Rectangle(225, 50, 25, 25, 'red');
+
+    e.x = Math.floor(Math.random() * (450 - 50))
+    e.y = -50
+
+    enemies.push(e);
+
 }
 
-function enemyFire(x, y)
-{
-    var eb = new Rectangle(x, y, 28, 28, 'white');
+function enemyFire(x, y) {
+    var eb = new Rectangle(x, y, 5, 5, 'white');
 
     eBullets.push(eb);
+
+}
+
+function reload(e) {
+    setTimeout(function () {
+        if (e.canShoot == false) {
+            e.canShoot = true;
+        }
+    }, 1000);
+
 }
 
 
