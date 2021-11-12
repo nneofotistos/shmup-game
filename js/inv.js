@@ -6,7 +6,7 @@ inv.setAttribute('width', getComputedStyle(inv)["width"]);
 
 
 const bomb_count = 3;
-let hits = 1;
+let hits = 8;
 let score = 0;
 let bombs;
 bombs = bomb_count;
