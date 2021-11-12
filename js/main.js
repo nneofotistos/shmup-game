@@ -177,7 +177,7 @@ function addEnemy() {
 }
 
 function enemyFire(x, y) {
-    var eb = new Rectangle(x, y, 5, 5, 'white');
+    var eb = new Rectangle(x, y, 8, 10, 'white');
 
     eBullets.push(eb);
 
@@ -188,7 +188,7 @@ function reload(e) {
         if (e.canShoot == false) {
             e.canShoot = true;
         }
-    }, 1000);
+    }, 1500);
 
 }
 
