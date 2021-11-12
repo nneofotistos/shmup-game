@@ -15,6 +15,7 @@ class Rectangle {
         this.speed = speed;
         this.alive = true;
         this.canShoot = true;
+        this.invuln = false;
 
         this.render = function () {
             ctx.fillStyle = this.color
@@ -64,7 +65,33 @@ var eBullets = [];
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
-    player.render();
+    // player movement
+    if (player.alive){
+        player.render();
+        if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
+            player.y - speed >= 0 ? player.y -= speed : null;
+        }
+        if (keyDown('s') || keyDown('ArrowDown') || keyDown('S')) {
+            player.y + speed <= game.height - 25 ? player.y += 10 : null;
+        }
+        if (keyDown('a') || keyDown('ArrowLeft') || keyDown('A')) {
+            player.x - speed >= 0 ? player.x -= speed : null;
+        }
+        if (keyDown('d') || keyDown('ArrowRight') || keyDown('D')) {
+            player.x + speed <= game.width - 25 ? player.x += 10 : null;
+        }
+        // shoot
+        if (keyDown('z') || keyDown('Z')) {
+            var b = new Rectangle(player.x + 10, player.y, 5, 5, 'white', 5)
+            bullets.push(b);
+        }
+    
+        if (keyDown('x')) {
+            if (bombs > 0) {
+                useBomb();
+            }
+        }
+    }
 
     // bullet movement
     for (let i = 0; i < bullets.length; i++) {
@@ -128,35 +155,15 @@ function gameLoop() {
 
 
         // check bullet and player collision
-        if(eBullets[i].x >= player.x && eBullets[i].x + eBullets[i].width < player.x + player.width && eBullets[i].y > player.y && eBullets[i].y < player.y + player.width){
+        if(eBullets[i].x >= player.x && eBullets[i].x + eBullets[i].width < player.x + player.width && eBullets[i].y > player.y && eBullets[i].y < player.y + player.width && eBullets[i].alive && player.alive && !player.invuln){
             eBullets[i].alive = null;
             eBullets.splice(i, 1);
+            playerHit();
+            
         }
     }
 
-    if (keyDown('w') || keyDown('ArrowUp') || keyDown('W')) {
-        player.y - speed >= 0 ? player.y -= speed : null;
-    }
-    if (keyDown('s') || keyDown('ArrowDown') || keyDown('S')) {
-        player.y + speed <= game.height - 25 ? player.y += 10 : null;
-    }
-    if (keyDown('a') || keyDown('ArrowLeft') || keyDown('A')) {
-        player.x - speed >= 0 ? player.x -= speed : null;
-    }
-    if (keyDown('d') || keyDown('ArrowRight') || keyDown('D')) {
-        player.x + speed <= game.width - 25 ? player.x += 10 : null;
-    }
-    // shoot
-    if (keyDown('z') || keyDown('Z')) {
-        var b = new Rectangle(player.x + 10, player.y, 5, 5, 'white', 5)
-        bullets.push(b);
-    }
-
-    if (keyDown('x')) {
-        if (bombs > 0) {
-            useBomb();
-        }
-    }
+    
 }
 
 function addEnemy() {
@@ -183,6 +190,30 @@ function reload(e) {
         }
     }, 1000);
 
+}
+
+function playerHit() {
+    if(hits>0 && !player.invuln){
+        hits--;
+        invuln(player);
+    } else if (hits<=1 && !player.invuln){
+        hits--;
+        gameOver();
+    }
+}
+
+function invuln(p) {
+    p.invuln = true;
+    p.color = 'rgba(255, 255, 255, 0.5)';
+    setTimeout(function () {
+        p.invuln = false;
+        p.color = 'blue';
+    }, 2000);
+}
+
+function gameOver() {
+    player.alive = false;
+    console.log('game over');
 }
 
 
