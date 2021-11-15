@@ -129,7 +129,7 @@ function gameLoop() {
         }
         // bullet and enemy collision
         for (let k = 0; k < bullets.length; k++) {
-            if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y < enemies[j].y + enemies[j].width && bullets[k].alive && enemies[j].alive) {
+            if (bullets[k].x >= enemies[j].x && bullets[k].x + bullets[k].width < enemies[j].x + enemies[j].width && bullets[k].y >= enemies[j].y && bullets[k].y < enemies[j].y + enemies[j].width && bullets[k].alive && enemies[j].alive) {
                 bullets[k].alive = null;
                 enemies[j].alive = null;
                 enemies.splice(j, 1);
@@ -214,6 +214,7 @@ function invuln(p) {
 
 function gameOver() {
     player.alive = false;
+    
     console.log('game over');
 }
 
