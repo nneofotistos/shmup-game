@@ -156,7 +156,7 @@ function gameLoop() {
 
 
         // check bullet and player collision
-        if(eBullets[i].x >= player.x && eBullets[i].x + eBullets[i].width < player.x + player.width && eBullets[i].y >= player.y && eBullets[i].y < player.y + player.width && eBullets[i].alive && player.alive && !player.invuln){
+        if(eBullets[i].x >= player.x && eBullets[i].x < player.x + player.width && eBullets[i].y >= player.y && eBullets[i].y < player.y + player.width && eBullets[i].alive && player.alive && !player.invuln){
             eBullets[i].alive = null;
             eBullets.splice(i, 1);
             playerHit();
@@ -218,7 +218,7 @@ function gameOver() {
 }
 
 function dropPickUp(x,y) {
-
+    
 }
 
 

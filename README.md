@@ -2,13 +2,13 @@
 Very basic shoot-em-up
 
 # How to play
-Go to https://nneofotistos.github.io/shmup-game/
-Controls displayed on page, shoot enemies for 5000 points each, dont get hit
+- Go to https://nneofotistos.github.io/shmup-game/
+- Controls displayed on page, shoot enemies for 5000 points each, dont get hit
 
 # Made with
-HTML5
-JavaScript
-CSS
+- HTML5
+- JavaScript
+- CSS
 
 # Code snippets
 ```
