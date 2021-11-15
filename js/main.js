@@ -62,6 +62,7 @@ window.addEventListener('load', function (e) {
 var bullets = [];
 var enemies = [];
 var eBullets = [];
+var pickups = [];
 
 function gameLoop() {
     ctx.clearRect(0, 0, game.width, game.height);
@@ -155,7 +156,7 @@ function gameLoop() {
 
 
         // check bullet and player collision
-        if(eBullets[i].x >= player.x && eBullets[i].x + eBullets[i].width < player.x + player.width && eBullets[i].y > player.y && eBullets[i].y < player.y + player.width && eBullets[i].alive && player.alive && !player.invuln){
+        if(eBullets[i].x >= player.x && eBullets[i].x + eBullets[i].width < player.x + player.width && eBullets[i].y >= player.y && eBullets[i].y < player.y + player.width && eBullets[i].alive && player.alive && !player.invuln){
             eBullets[i].alive = null;
             eBullets.splice(i, 1);
             playerHit();
@@ -216,5 +217,8 @@ function gameOver() {
     console.log('game over');
 }
 
+function dropPickUp(x,y) {
+
+}
 
 
